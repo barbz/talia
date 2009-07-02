@@ -110,6 +110,22 @@ module FacsimileEditionsHelper
     ''
   end
  
+  def each_page_relation
+    rel_query = Query.new(N::URI).select(:part, :catalog).distinct
+    rel_query.where(:conc, N::HYPER.concordant_to, @page)
+    rel_query.where(:conc, N::HYPER.concordant_to, :page)
+    rel_query.where(:note, N::HYPER.page, :page)
+    rel_query.where(:part, N::HYPER.note, :note)
+    rel_query.where(:manifestation, N::HYPER.manifestation_of, :part)
+    rel_query.where(:manifestation, N::RDF.type, N::HYPER.HyperEdition)
+    rel_query.where(:part, N::HYPER.in_catalog, :catalog)
+    rel_query.where(:catalog, N::RDF.type, N::TALIA.CriticalEdition)
+    rel_query.execute.each do |result_set|
+      manifestation = TaliaCore::Source.find(result_set.first)
+      yield(result_set.first.local_name, "#{result_set.last}/#{result_set.first.local_name}")
+    end
+  end
+ 
   # returns the copyright note to be shown below the facsimile images
   def copyright_note(book_part)
     book = book_part.book
