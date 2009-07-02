@@ -38,9 +38,7 @@ module TaliaCore
       catalog = para.catalog
       result = ''
       conc_qry = Query.new(N::URI).select(:page, :cat).distinct
-      conc_qry.where(para, N::HYPER.note, :note)
-      conc_qry.where(:note, N::HYPER.page, :orig_page)
-      conc_qry.where(:conc, N::HYPER.concordant_to, :orig_page)
+      conc_qry.where(:conc, N::HYPER.concordant_to, page)
       conc_qry.where(:conc, N::HYPER.concordant_to, :page)
       conc_qry.where(:page, N::HYPER.in_catalog, :cat)
       conc_qry.where(:fac, N::HYPER.manifestation_of, :page)

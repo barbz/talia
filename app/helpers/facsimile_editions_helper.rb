@@ -114,9 +114,7 @@ module FacsimileEditionsHelper
     rel_query = Query.new(N::URI).select(:part, :catalog).distinct
     rel_query.where(:conc, N::HYPER.concordant_to, @page)
     rel_query.where(:conc, N::HYPER.concordant_to, :page)
-    rel_query.where(:note, N::HYPER.page, :page)
-    rel_query.where(:part, N::HYPER.note, :note)
-    rel_query.where(:manifestation, N::HYPER.manifestation_of, :part)
+    rel_query.where(:manifestation, N::HYPER.manifestation_of, :page)
     rel_query.where(:manifestation, N::RDF.type, N::HYPER.HyperEdition)
     rel_query.where(:part, N::HYPER.in_catalog, :catalog)
     rel_query.where(:catalog, N::RDF.type, N::TALIA.CriticalEdition)
