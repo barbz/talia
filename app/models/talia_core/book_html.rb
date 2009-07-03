@@ -34,8 +34,8 @@ module TaliaCore
       self.save!
     end
     
-    def each_related_facs_page(para)
-      catalog = para.catalog
+    def each_related_facs_page(page)
+      catalog = page.catalog
       result = ''
       conc_qry = Query.new(N::URI).select(:page, :cat).distinct
       conc_qry.where(:conc, N::HYPER.concordant_to, page)

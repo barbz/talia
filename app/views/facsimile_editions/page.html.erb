@@ -25,9 +25,9 @@
         <%= iip_flash_viewer(@page2_facsimile, "100%", "100%", "iipfview_right") %>
       </div>
     <% else %>
-	  <div class="semantic_links">
+	  	<div class="semantic_links">
 		<% each_page_relation do |title,link| %>
-			<a href="<%= link %>"><%= title %></a>
+		<a href="<%= link %>"><%= title %></a>
 		<% end %>
 	  </div>
       <!--  Single Page -->
