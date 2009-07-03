@@ -111,12 +111,12 @@ module FacsimileEditionsHelper
   end
  
   def each_page_relation
-    rel_query = Query.new(N::URI).select(:part, :catalog).distinct
+    rel_query = Query.new(N::URI).select(:page, :catalog).distinct
     rel_query.where(:conc, N::HYPER.concordant_to, @page)
     rel_query.where(:conc, N::HYPER.concordant_to, :page)
     rel_query.where(:manifestation, N::HYPER.manifestation_of, :page)
     rel_query.where(:manifestation, N::RDF.type, N::HYPER.HyperEdition)
-    rel_query.where(:part, N::HYPER.in_catalog, :catalog)
+    rel_query.where(:page, N::HYPER.in_catalog, :catalog)
     rel_query.where(:catalog, N::RDF.type, N::TALIA.CriticalEdition)
     rel_query.execute.each do |result_set|
       manifestation = TaliaCore::Source.find(result_set.first)
